@@ -1,5 +1,7 @@
 // lib/core/di/injection_container.dart
 
+import 'package:clean_architecture/core/navigation/auth_state.dart';
+import 'package:clean_architecture/core/navigation/auth_state_adapter.dart';
 import 'package:clean_architecture/core/network/api_client.dart';
 import 'package:get_it/get_it.dart';
 
@@ -22,4 +24,7 @@ Future<void> initDependencies() async {
 
   // Register ApiClient (depends on interceptors)
   await ApiClient.register();
+
+  // Auth abstraction for router (no UI here)
+  sl.registerLazySingleton<AuthState>(() => AuthStateAdapter(sl()));
 }
