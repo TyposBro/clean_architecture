@@ -7,7 +7,6 @@ import 'package:clean_architecture/core/constants/api_constants.dart';
 import 'package:clean_architecture/core/constants/network_constants.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
-import '../session/session_manager.dart';
 
 class ApiClient {
   final Dio _dio;
@@ -19,7 +18,6 @@ class ApiClient {
     final sl = GetIt.instance;
 
     // Ensure dependencies are initialized first
-    final sessionManager = sl<SessionManager>();
     final authInterceptor = sl<AuthInterceptor>();
     final loggingInterceptor = sl<LoggingInterceptor>();
 
@@ -35,7 +33,6 @@ class ApiClient {
       ),
     );
 
-    // 🧩 Order matters: logger first, so you see headers added by auth
     dio.interceptors.addAll([
       authInterceptor,
       loggingInterceptor,
